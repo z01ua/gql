@@ -1,5 +1,4 @@
-#gql
-
+# gql
 ```
 $ npm install
 $ npm start
