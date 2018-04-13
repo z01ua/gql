@@ -44,6 +44,13 @@ class Hotel {
     this.languagePreference = generateName();
     this.ratePlans = [new ratePlan()];
     this.roomTypes = [new roomType()];
+
+    this.channelManagerHotelId = "" + generateCode();
+    this.channelManagerPmsHotelId = "" + generateCode();
+    this.leonardoHotelCode = this.code;
+    this.hotelEmail = generateEmail();
+    this.taxPercentage = "" + generateCode();
+    this.roomRates = [];
   }
 }
 
@@ -61,7 +68,7 @@ const rootValue = {
     var output = hotelsList,
     pagination = {};
 
-    if(filter) {
+    if(filter && filter.code) {
       output = output.filter(function(hotel) {
         return hotel.code && (new RegExp(filter.code)).test(hotel.code);
       });
