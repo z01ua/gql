@@ -54,7 +54,39 @@ class Hotel {
   }
 }
 
-var hotelsList = Array.from(Array(10000).keys()).map(() => (new Hotel()));
+// This class implements the RandomDie GraphQL type
+class Pms {
+  constructor(hotel_num) {
+    this.code = "" + generateCode()
+    this.username = generateName()
+    this.hotelLevelAuthentication = Math.random() > 0.5 ? true : false
+    this.hotelList = Array.from(Array(hotel_num).keys()).map(() => (new Hotel()))
+  }
+  hotel({code = null}) {
+    if(code) {
+      var hotel = null
+      hotel = this.hotelList.filter(function(hotel_to_check) {
+        if(hotel_to_check.code === code) {
+          return true
+        }
+        else {
+          return false
+        }
+      });
+      if(hotel && hotel.length) {
+        return hotel[0]
+      }
+    }
+
+    return null;
+  }
+  hotels() {
+    return this.hotelList
+  }
+}
+
+var hotelsList = Array.from(Array(10000).keys()).map(() => (new Hotel())),
+  pmsesList = Array.from(Array(10000).keys()).map(() => (new Pms(100)))
 
 // The root provides the top-level API endpoints
 const rootValue = {
@@ -83,10 +115,25 @@ const rootValue = {
 
     return {items: output, pagination};
   },
-  pagination: function() {
-    return {
+  pmses: function({filter = null, page = 0, size = 10}) {
+    console.log('ok')
+    var output = pmsesList,
+    pagination = {};
 
-    };
+    if(filter && filter.code) {
+      output = output.filter(function(pms) {
+        return pms.code && (new RegExp(filter.code)).test(pms.code);
+      });
+    }
+
+    pagination.page   = page;
+    pagination.pages  = Math.ceil(output.length / size);
+    pagination.size   = size;
+    pagination.total  = output.length;
+
+    output = output.slice(page * size, (page + 1) * size);
+
+    return {items: output, pagination};
   }
 }
 

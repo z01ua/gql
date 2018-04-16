@@ -59,10 +59,29 @@ var schema = buildSchema(`
     pagination: Pagination
   }
 
+  type Pms {    
+    code: String!
+    username: String
+    hotelLevelAuthentication: Boolean
+    hotels(filter: HotelsFilterInput!, page: Int, size: Int): HotelList
+    hotel(code: String!): Hotel
+  }
+
+  input PmsesFilterInput {
+    code: String
+  }
+
+  type PmsList {
+    pagination: Pagination
+    items: [Pms!]
+  }
+
   type Query {
     getDie(numSides: Int): RandomDie
     hotel(id: ID, code: String): Hotel!
     hotels(filter: HotelsFilterInput, page: Int, size: Int): HotelList!
+    pms(pmsCode: String!): Pms
+    pmses(filter: PmsesFilterInput, page: Int, size: Int): PmsList!  
   }
 `);
 
