@@ -80,9 +80,6 @@ class Pms {
 
     return null;
   }
-  hotels() {
-    return this.hotelList
-  }
 }
 
 var hotelsList = Array.from(Array(10000).keys()).map(() => (new Hotel())),
@@ -116,7 +113,6 @@ const rootValue = {
     return {items: output, pagination};
   },
   pmses: function({filter = null, page = 0, size = 10}) {
-    console.log('ok')
     var output = pmsesList,
     pagination = {};
 
