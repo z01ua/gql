@@ -34,6 +34,19 @@ class roomType {
   }
 }
 
+class roomRates {
+  constructor() {
+/*    this.code = Math.floor(Math.random()*1000);*/
+    this.hotelMappingId = "" + generateCode();
+    this.channelManagerRoomRateId = "" + generateCode();
+    this.channelManagerPmsRoomRateId = "" + generateCode();
+    this.leonardoRoomTypeCode = "" + generateCode();
+    this.leonardoRatePlanCode = "" + generateCode();
+    this.channelManagerRoomRateDescription = "" + generateCode();
+  }
+}
+
+
 // This class implements the RandomDie GraphQL type
 class Hotel {
   constructor() {
@@ -50,7 +63,7 @@ class Hotel {
     this.leonardoHotelCode = this.code;
     this.hotelEmail = generateEmail();
     this.taxPercentage = "" + generateCode();
-    this.roomRates = [];
+    this.roomRates = [new roomRates()];
   }
 }
 
