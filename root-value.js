@@ -62,6 +62,25 @@ class Pms {
     this.hotelLevelAuthentication = Math.random() > 0.5 ? true : false
     this.hotelList = Array.from(Array(hotel_num).keys()).map(() => (new Hotel()))
   }
+  hotels({ filter: {code = null}, page = 0, size = 10 }) {
+    var hotelsOutput = this.hotelList,
+    pagination = {}
+
+
+    if(code) {
+      hotelsOutput = hotelsOutput.filter(function(hotel) {
+        return hotel.code && (new RegExp(code)).test(hotel.code);
+      });
+    }
+    pagination.page   = page;
+    pagination.pages  = Math.ceil(hotelsOutput.length / size);
+    pagination.size   = size;
+    pagination.total  = hotelsOutput.length;
+
+    hotelsOutput = hotelsOutput.slice(page * size, (page + 1) * size);
+
+    return {items: hotelsOutput, pagination};
+  }
   hotel({code = null}) {
     if(code) {
       var hotel = null
@@ -130,6 +149,12 @@ const rootValue = {
     output = output.slice(page * size, (page + 1) * size);
 
     return {items: output, pagination};
+  },
+  pms: function({pmsCode}) {
+    const candidatePms = pmsesList.find((pms_item) => {
+      return pms_item && pms_item.code && pms_item.code === pmsCode
+    })
+    return candidatePms
   }
 }
 

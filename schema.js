@@ -63,7 +63,7 @@ var schema = buildSchema(`
     code: String!
     username: String
     hotelLevelAuthentication: Boolean
-    hotels(filter: HotelsFilterInput!, page: Int, size: Int): HotelList
+    hotels(filter: HotelsFilterInput, page: Int, size: Int): HotelList
     hotel(code: String!): Hotel
   }
 
